@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/node:6.8
+      - image: circleci/node:7.10
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -28,7 +28,7 @@ jobs:
 
       - run:
           name: Install dependencies
-          command: yarn install
+          command: yarn install --ignore-engines
 
       - save_cache:
           paths:
