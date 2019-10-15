@@ -1,5 +1,8 @@
 /*jshint esversion: 6 */
 
+(function () {
+"use strict";
+
 class BaseAlphaGenerator {
   constructor(alphabet) {
     this.idx = 0;
@@ -12,9 +15,9 @@ class BaseAlphaGenerator {
     var l = this.alphabet.length;
     while (i >= l) {
       sb.unshift(this.alphabet[i % l]);
-      i /= l;
+      i = Math.floor(i / l);
     }
-    sb.push(this.alphabet[i]);
+    sb.unshift(this.alphabet[i]);
     this.idx += 1;
     return sb.join('');
   }
@@ -24,24 +27,6 @@ class BaseAlphaGenerator {
   }
 }
 
-class AlphabeticalGenerator extends BaseAlphaGenerator {
-  constructor() {
-    super("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-  }
-}
+module.exports = BaseAlphaGenerator;
 
-class NumericalGenerator {
-  constructor(start = 0) {
-    this.idx = start;
-  }
-
-  Next() {
-    var next = this.idx;
-    this.idx += 1;
-    return String(next);
-  }
-
-  Reset() {
-    this.idx = 0;
-  }
-}
+})();

@@ -1,10 +1,13 @@
 /*jshint esversion: 6 */
 
+gn = require('require-all')(__dirname + '/../generators');
+
+
 const assert = require('assert');
 
-it('Should generate custom id', () => {
+it('Generate custom id', () => {
   // Arrange
-  var g = new BaseAlphaGenerator("xyz3456789");
+  var g = new gn.BaseAlphaGenerator("xyz3456789");
 
   // Act
   n = 1042;
@@ -16,10 +19,10 @@ it('Should generate custom id', () => {
   assert.equal("yx4z", g.Next());
 });
 
-it('Should generate numerical id', () => {
+it('Generate numerical id', () => {
   // Arrange
   // Arrange
-  var g = new NumericalGenerator();
+  var g = new gn.NumericalGenerator();
 
   // Act
   n = 1042;
@@ -28,14 +31,14 @@ it('Should generate numerical id', () => {
   }
 
   // Assert
-  assert.equal(n.ToString(), g.Next());
+  assert.equal(String(n), g.Next());
 });
 
 
-it('Should generate alphabetical id', () => {
+it('Generate alphabetical id', () => {
   // Arrange
   // Arrange
-  var g = new AlphabeticalGenerator();
+  var g = new gn.AlphabeticalGenerator();
 
   // Act
   n = 1042;

@@ -1,12 +1,15 @@
 /*jshint esversion: 6 */
 
+gn = require('require-all')(__dirname + '/../generators');
+th = require('require-all')(__dirname + '/../theatre');
+
 const assert = require('assert');
 
 it('Book one seat', () => {
   // Arrange
   n = 3;
   m = 5;
-  var s = new SeatGrid(n, m, m / 2, new AlphabeticalGenerator(), new NumericalGenerator());
+  var s = new th.SeatGrid(n, m, Math.floor(m / 2), new gn.AlphabeticalGenerator(), new gn.NumericalGenerator());
 
   // Act
   s.Book(1);
@@ -19,7 +22,7 @@ it('Book all seats', () => {
   // Arrange
   n = 3;
   m = 5;
-  var s = new SeatGrid(n, m, m / 2, new AlphabeticalGenerator(), new NumericalGenerator());
+  var s = new th.SeatGrid(n, m, Math.floor(m / 2), new gn.AlphabeticalGenerator(), new gn.NumericalGenerator());
 
   // Act
   s.Book(n * m);
@@ -34,30 +37,30 @@ it('Overbook the grid', () => {
   // Arrange
   n = 3;
   m = 5;
-  var s = new SeatGrid(n, m, m / 2, new AlphabeticalGenerator(), new NumericalGenerator());
+  var s = new th.SeatGrid(n, m, Math.floor(Math.floor(m / 2)), new gn.AlphabeticalGenerator(), new gn.NumericalGenerator());
 
   // Act
   var seats = s.Book(n * m + 100);
 
   // Assert
-  assert.equal(n * m, seats.Length);
+  assert.equal(n * m, seats.length);
 });
 
 it('Book a minimal 2x2 grid', () => {
   // Arrange
-  var s = new SeatGrid(2, 2, 1, new AlphabeticalGenerator(), new NumericalGenerator());
+  var s = new th.SeatGrid(2, 2, 1, new gn.AlphabeticalGenerator(), new gn.NumericalGenerator());
 
   // Act
   var seats = s.Book(3);
 
   // Assert
-  assert.equal(["1", "0", "1"], seats.map(x => x.ID));
+  assert.deepEqual(["1", "0", "1"], seats.map(x => x.ID));
 });
 
 
 it('Book a row with no left section', () => {
   // Arrange
-  var r = new Row(5, 0, "T", new NumericalGenerator());
+  var r = new th.Row(5, 0, "T", new gn.NumericalGenerator());
   var seats = [];
 
   // Act
@@ -66,7 +69,7 @@ it('Book a row with no left section', () => {
   seats.push(r.BookNext());
 
   // Assert
-  assert.equal([
+  assert.deepEqual([
     "2",
     "3",
     "1"
@@ -75,7 +78,7 @@ it('Book a row with no left section', () => {
 
 it('Book a row with no right section', () => {
   // Arrange
-  var r = new Row(5, 5, "T", new NumericalGenerator());
+  var r = new th.Row(5, 5, "T", new gn.NumericalGenerator());
   var seats = [];
 
   // Act
@@ -84,7 +87,7 @@ it('Book a row with no right section', () => {
   seats.push(r.BookNext());
 
   // Assert
-  assert.equal([
+  assert.deepEqual([
     "2",
     "3",
     "1"
@@ -93,7 +96,7 @@ it('Book a row with no right section', () => {
 
 it('Book a row with no left section', () => {
   // Arrange
-  var r = new Row(9, 7, "T", new NumericalGenerator());
+  var r = new th.Row(9, 7, "T", new gn.NumericalGenerator());
   var seats = [];
 
   // Act
@@ -102,7 +105,7 @@ it('Book a row with no left section', () => {
   seats.push(r.BookNext());
 
   // Assert
-  assert.equal([
+  assert.deepEqual([
     "7",
     "8",
     "4"
@@ -112,7 +115,7 @@ it('Book a row with no left section', () => {
 it('Book in a general case (right then left)', () => {
   // Arrange
   n = 42;
-  var r = new Row(n, n / 2, "T", new NumericalGenerator());
+  var r = new th.Row(n, n / 2, "T", new gn.NumericalGenerator());
   var seats = [];
 
   var sIDs = [];
@@ -128,5 +131,5 @@ it('Book in a general case (right then left)', () => {
     seats.push(r.BookNext());
 
   // Assert
-  assert.equal(sIDs, seats.map(x => x.ID));
+  assert.deepEqual(sIDs, seats.map(x => x.ID));
 });
